@@ -78,7 +78,6 @@
 			<version>8.1.0</version> <!-- or latest stable -->
 		</dependency>
 
-
 	</dependencies>
 
 	<build>
