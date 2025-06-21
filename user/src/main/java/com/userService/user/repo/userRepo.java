@@ -8,4 +8,5 @@ import com.userService.user.model.User;
 @Repository
 public interface userRepo extends JpaRepository<User, Long>{
 
+
 }
