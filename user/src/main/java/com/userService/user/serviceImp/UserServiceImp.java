@@ -1,6 +1,7 @@
 package com.userService.user.serviceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.userService.user.common.CommonResponse;
 import com.userService.user.common.Constants;
@@ -12,6 +13,7 @@ import com.userService.user.service.UserService;
 
 import jakarta.transaction.Transactional;
 
+@Service
 public class UserServiceImp implements UserService {
 
 	@Autowired
