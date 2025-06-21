@@ -6,7 +6,7 @@ import lombok.Data;
 public class CommonResponse<T> {
 	
 	T data;
-	String error;
+	String successMessages;
 	Integer status;
 	boolean success;
 }

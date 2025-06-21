@@ -1,7 +1,5 @@
 package com.userService.user.serviceImp;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.userService.user.common.CommonResponse;
@@ -21,33 +19,35 @@ public class UserServiceImp implements UserService {
 
 	@Transactional
 	@Override
-	public CommonResponse<Integer> addUpdateUser(User user) {
-		CommonResponse<Integer> response = new CommonResponse<>();
+	public CommonResponse<Long> addUpdateUser(User user) {
+		CommonResponse<Long> response = new CommonResponse<>();
 
 		try {
-
+			User userToSave;
 			if (user.getUserId() != null) {
-				Optional<User> existingUser = userRepo.findById(user.getUserId());
-				User existingUserDetail = existingUser.get();
-				existingUserDetail.setEmail(user.getEmail());
-				existingUserDetail.setFirstName(user.getFirstName());
-				existingUserDetail.setLastName(user.getLastName());
-				existingUserDetail.setUserName(user.getUserName());
-				if (!PasswordEncoderUtil.matches(user.getPassword(), existingUserDetail.getPassword())) {
-					existingUserDetail.setPassword(PasswordEncoderUtil.encode(user.getPassword()));
+				userToSave = userRepo.findById(user.getUserId())
+						.orElseThrow(() -> new RuntimeException(Constants.USER_NOT_FOUND + user.getUserId()));
+
+				userToSave.setEmail(user.getEmail());
+				userToSave.setFirstName(user.getFirstName());
+				userToSave.setLastName(user.getLastName());
+				userToSave.setUserName(user.getUserName());
+				if (!PasswordEncoderUtil.matches(user.getPassword(), userToSave.getPassword())) {
+					userToSave.setPassword(PasswordEncoderUtil.encode(user.getPassword()));
 				}
-				userRepo.save(existingUserDetail);
-				response.setError(Constants.USER_UPDATED_SUCCSSFULLY);
+				response.setSuccessMessages(Constants.USER_UPDATED_SUCCESSFULLY);
 			} else {
 				user.setPassword(PasswordEncoderUtil.encode(user.getPassword()));
-				userRepo.save(user);
-				response.setError(Constants.USER_ADDED_SUCCSSFULLY);
+				userToSave = user;
+				response.setSuccessMessages(Constants.USER_ADDED_SUCCSSFULLY);
 			}
+			User savedUser = userRepo.save(userToSave);
+			response.setData(savedUser.getUserId());
 			response.setStatus(HttpStatusCodes.OK);
 			response.setSuccess(true);
 		} catch (Exception e) {
 			response.setData(null);
-			response.setError(Constants.ERROR);
+			response.setSuccessMessages(Constants.ERROR);
 			response.setStatus(HttpStatusCodes.INTERNAL_SERVER_ERROR);
 			response.setSuccess(false);
 		}
