@@ -14,5 +14,4 @@ public interface UserService {
 	CommonResponse<UserDTO> getUser(Long userId);
 
 	CommonResponse<Integer> deleteUser(Long userId);
-
 }
