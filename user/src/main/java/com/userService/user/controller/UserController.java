@@ -19,7 +19,7 @@ public class UserController {
 	UserService userService;
 	
 	@PostMapping("/save/user") 
-	public ResponseEntity<CommonResponse<Integer>> addUpdateUser(@RequestBody User user) {
+	public ResponseEntity<CommonResponse<Long>> addUpdateUser(@RequestBody User user) {
 		return ResponseEntity.ok(userService.addUpdateUser(user));
 	}
 }
