@@ -1,5 +1,11 @@
 package com.productService.product.repo;
+ 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProductRepo {
+import com.productService.product.model.Product;
 
+@Repository
+public interface ProductRepo extends JpaRepository<Product, Long>{
+  
 }
