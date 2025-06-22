@@ -113,28 +113,4 @@ public class UserServiceImp implements UserService {
 		return response;
 	}
 
-	@Override
-	public CommonResponse<UserDTO> getUser(Long userId) {
-		CommonResponse<UserDTO> response = new CommonResponse<>();
-
-		try {
-
-			Optional<User> user = userRepo.findById(userId);
-			UserDTO userDto = new UserDTO(user.get().getUserId(), user.get().getFirstName(), user.get().getUserName(),
-					user.get().getLastName(), user.get().getEmail());
-			response.setData(userDto);
-			response.setSuccessMessages(Constants.GET_USER_SUCCSSFULLY);
-			response.setStatus(HttpStatusCodes.OK);
-			response.setSuccess(false);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.setData(null);
-			response.setSuccessMessages(Constants.ERROR);
-			response.setStatus(HttpStatusCodes.INTERNAL_SERVER_ERROR);
-			response.setSuccess(false);
-		}
-		return response;
-	}
-
 }
