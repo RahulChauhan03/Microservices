@@ -1,5 +1,5 @@
 package com.productService.product.controller;
-
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,4 +35,5 @@ public class ProductController {
     public ResponseEntity<CommonResponse<Integer>> deleteProduct(@RequestParam("productId") Long productId){
         return ResponseEntity.ok(productService.deleteProduct(productId));
     }
+ 
 }

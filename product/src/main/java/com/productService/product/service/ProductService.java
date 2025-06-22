@@ -1,5 +1,6 @@
 package com.productService.product.service;
 
+ 
 import org.springframework.stereotype.Service;
 
 import com.productService.product.DTO.ProductDTO;
@@ -14,5 +15,5 @@ public interface ProductService {
 	CommonResponse<ProductDTO>  getProduct(Long productId);
 
 	CommonResponse<Integer> deleteProduct(Long productId);
-
+ 
 }
