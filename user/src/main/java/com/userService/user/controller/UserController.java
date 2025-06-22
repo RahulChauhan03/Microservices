@@ -26,12 +26,12 @@ public class UserController {
 		return ResponseEntity.ok(userService.addUpdateUser(user));
 	}
 	
-	@GetMapping("get/user")
+	@GetMapping("/get/user")
 	public ResponseEntity<CommonResponse<UserDTO>> getUser(@RequestParam("userId") Long userId){
 		return ResponseEntity.ok(userService.getUser(userId));
 	}
   
-	@GetMapping("delete/user")
+	@GetMapping("/delete/user")
 	public ResponseEntity<CommonResponse<Integer>> deleteUser(@RequestParam("userId") Long userId){
 		return ResponseEntity.ok(userService.deleteUser(userId));
 	}
