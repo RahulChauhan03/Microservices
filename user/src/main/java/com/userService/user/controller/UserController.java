@@ -35,4 +35,10 @@ public class UserController {
 	public ResponseEntity<CommonResponse<Integer>> deleteUser(@RequestParam("userId") Long userId){
 		return ResponseEntity.ok(userService.deleteUser(userId));
 	}
+	
+	@PostMapping("/buy/product")
+    public ResponseEntity<CommonResponse<Integer>> buyProduct(@RequestParam("userId") Long userId,
+                                             @RequestParam("productId") Long productId) {
+		return ResponseEntity.ok(userService.buyProduct(userId,productId));
+	}
 }

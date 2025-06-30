@@ -5,11 +5,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.productService.product.DTO.ProductDTO;
 import com.userService.user.DTO.UserDTO;
 import com.userService.user.common.CommonResponse;
 import com.userService.user.common.Constants;
 import com.userService.user.common.HttpStatusCodes;
 import com.userService.user.common.PasswordEncoderUtil;
+import com.userService.user.config.ProductClient;
 import com.userService.user.model.User;
 import com.userService.user.repo.userRepo;
 import com.userService.user.service.UserService;
@@ -21,6 +23,9 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	userRepo userRepo;
+	
+	@Autowired
+	private ProductClient productClient;
 
 	@Transactional
 	@Override
@@ -103,6 +108,22 @@ public class UserServiceImp implements UserService {
 			}
 			response.setStatus(HttpStatusCodes.OK);
 			response.setSuccess(false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setData(null);
+			response.setSuccessMessages(Constants.ERROR);
+			response.setStatus(HttpStatusCodes.INTERNAL_SERVER_ERROR);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	@Override
+	public CommonResponse<Integer> buyProduct(Long userId, Long productId) {
+		CommonResponse<Integer> response = new CommonResponse<>();
+		try {
+			  CommonResponse<ProductDTO> productResponse = productClient.getProductById(productId);
+			  
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setData(null);

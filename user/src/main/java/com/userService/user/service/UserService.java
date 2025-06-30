@@ -14,4 +14,6 @@ public interface UserService {
 	CommonResponse<UserDTO> getUser(Long userId);
 
 	CommonResponse<Integer> deleteUser(Long userId);
+
+	CommonResponse<Integer> buyProduct(Long userId, Long productId);
 }
