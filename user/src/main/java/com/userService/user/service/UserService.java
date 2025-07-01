@@ -15,5 +15,5 @@ public interface UserService {
 
 	CommonResponse<Integer> deleteUser(Long userId);
 
-	CommonResponse<Integer> buyProduct(Long userId, Long productId);
+	CommonResponse<Integer> purchaseProduct(Long userId, Long productId);
 }
