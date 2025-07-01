@@ -10,6 +10,6 @@ import com.userService.user.common.CommonResponse;
 public interface ProductClient {
 
 
-	@GetMapping("/get/product")
+	@GetMapping("/product/get/product")
 	 CommonResponse<ProductDTO> getProductById(@RequestParam("productId") Long id);
 }

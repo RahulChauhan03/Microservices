@@ -36,9 +36,9 @@ public class UserController {
 		return ResponseEntity.ok(userService.deleteUser(userId));
 	}
 	
-	@PostMapping("/buy/product")
-    public ResponseEntity<CommonResponse<Integer>> buyProduct(@RequestParam("userId") Long userId,
+	@PostMapping("/purchase/product")
+    public ResponseEntity<CommonResponse<Integer>> purchaseProduct(@RequestParam("userId") Long userId,
                                              @RequestParam("productId") Long productId) {
-		return ResponseEntity.ok(userService.buyProduct(userId,productId));
+		return ResponseEntity.ok(userService.purchaseProduct(userId,productId));
 	}
 }

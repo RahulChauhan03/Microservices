@@ -12,7 +12,9 @@ import com.userService.user.common.Constants;
 import com.userService.user.common.HttpStatusCodes;
 import com.userService.user.common.PasswordEncoderUtil;
 import com.userService.user.config.ProductClient;
+import com.userService.user.model.Purchase;
 import com.userService.user.model.User;
+import com.userService.user.repo.PurchaseRepo;
 import com.userService.user.repo.userRepo;
 import com.userService.user.service.UserService;
 
@@ -23,9 +25,12 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	userRepo userRepo;
-	
+
 	@Autowired
 	private ProductClient productClient;
+
+	@Autowired
+	PurchaseRepo purchaseRepo;
 
 	@Transactional
 	@Override
@@ -97,7 +102,7 @@ public class UserServiceImp implements UserService {
 	public CommonResponse<Integer> deleteUser(Long userId) {
 		CommonResponse<Integer> response = new CommonResponse<>();
 		try {
-		 
+
 			if (userRepo.existsById(userId)) {
 				userRepo.deleteById(userId);
 				response.setData(1);
@@ -119,11 +124,33 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public CommonResponse<Integer> buyProduct(Long userId, Long productId) {
+	public CommonResponse<Integer> purchaseProduct(Long userId, Long productId) {
 		CommonResponse<Integer> response = new CommonResponse<>();
 		try {
-			  CommonResponse<ProductDTO> productResponse = productClient.getProductById(productId);
-			  
+			CommonResponse<ProductDTO> productResponse = productClient.getProductById(productId);
+			if (productResponse.getData() != null) {
+				Purchase purchaseProduct = new Purchase();
+				purchaseProduct.setUserId(userId);
+				purchaseProduct.setProductId(productId);
+				purchaseProduct.setProductName(productResponse.getData().getName());
+				Purchase saved = purchaseRepo.save(purchaseProduct);
+				if (saved != null) {
+					response.setData(1);
+					response.setSuccess(true);
+					response.setSuccessMessages(Constants.ORDER_PLACED);
+				} else {
+					response.setData(2);
+					response.setSuccess(false);
+					response.setSuccessMessages(Constants.ORDER__NOT_PLACED);
+				}
+				response.setStatus(HttpStatusCodes.OK);
+			} else {
+				response.setData(0);
+				response.setSuccess(false);
+				response.setSuccessMessages(Constants.PRODUCT_NOT_AVAILABLE);
+				response.setStatus(HttpStatusCodes.NOT_FOUND);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setData(null);
